@@ -1,0 +1,49 @@
+h1 {
+	font-family: 'Nunito', sans-serif;
+	font-weight: 900;
+	color: rgb(255, 255, 255);
+}
+
+h2 {
+	font-family: 'Nunito', sans-serif;
+	font-weight: 800;
+	color: rgb(255, 255, 255);
+}
+
+h3 {
+	font-family: 'Nunito', sans-serif;
+	font-weight: 600;
+	color: rgb(255, 255, 255);
+}
+
+p {
+	font-family: 'Nunito', sans-serif;
+	font-weight: 500;
+	color: rgb(255, 255, 255);
+}
+
+body {
+	height: 100vh;
+	margin: 0;
+	background: radial-gradient(circle at center, #0b1961 0%, #08091f 100%);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	overflow: hidden;
+}
+
+body::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 3px;
+	height: 3px;
+	border-radius: 50%;
+	border: 1px solid #a6e0ff;
+	background: white;
+	box-shadow: 5vw 10vh white, 15vw 20vh white, 25vw 5vh white, 35vw 15vh white, 45vw 25vh white, 55vw 8vh white,
+		65vw 18vh white, 75vw 12vh white, 85vw 22vh white, 95vw 6vh white, 10vw 40vh white, 20vw 60vh white, 30vw 50vh white,
+		40vw 70vh white, 50vw 45vh white, 60vw 65vh white, 70vw 55vh white, 80vw 75vh white, 90vw 48vh white,
+		15vw 85vh white, 35vw 90vh white, 55vw 80vh white, 75vw 95vh white, 95vw 88vh white;
+}

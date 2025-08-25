@@ -1,0 +1,22 @@
+.play-btn {
+	background-color: #fa8304;
+}
+
+.planet {
+	width: 500px;
+	height: 500px;
+}
+
+.planet-top {
+	position: absolute;
+	top: -290px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.planet-bottom {
+	position: absolute;
+	top: 740px;
+	left: 50%;
+	transform: translateX(-50%);
+}
