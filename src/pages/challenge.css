@@ -1,0 +1,45 @@
+#challenge {
+	position: relative;
+	min-height: 100vh;
+	overflow: hidden;
+	background: radial-gradient(circle at center, #0b1961 20%, #08091f 100%);
+	transition: opacity 0.5s ease, transform 0.5s ease;
+	opacity: 1;
+}
+
+#challenge.fade-out {
+	opacity: 0;
+	transform: scale(0.95); /* opcional: achicar un poco */
+}
+
+#challenge .planet {
+	position: absolute;
+	bottom: 25vh; /* “recorta” el planeta por la mitad */
+	left: 50%;
+	transform: translateX(-50%);
+	width: 120vw; /* más ancho que la pantalla para que llene bien */
+	height: auto;
+	z-index: 1;
+	pointer-events: none;
+}
+
+/* Texto centrado por encima */
+#challenge .text-challenge {
+	position: absolute;
+	top: 48%; /* ajusta 45–50% según tu gusto */
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 2;
+	color: #fff;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+#challenge .humans {
+	display: flex;
+	gap: 0.5rem;
+	align-items: baseline;
+	justify-content: center;
+}

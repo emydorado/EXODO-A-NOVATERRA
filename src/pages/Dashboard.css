@@ -1,10 +1,27 @@
+#dashboard {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 .play-btn {
+	z-index: 100;
 	background-color: #fa8304;
+	border-radius: 12px;
+	height: 40px;
+	width: 160px;
+	border: none;
+	font-family: 'Nunito', sans-serif;
+	font-size: 25px;
+	font-weight: 700;
+	color: white;
+	margin-top: 30px;
 }
 
 .planet {
 	width: 500px;
 	height: 500px;
+	z-index: 100;
 }
 
 .planet-top {
@@ -19,4 +36,75 @@
 	top: 740px;
 	left: 50%;
 	transform: translateX(-50%);
+}
+
+.players-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	max-width: 300px;
+	margin-top: 290px;
+}
+
+.players-content h3 {
+	text-align: center;
+	margin-bottom: 40px;
+}
+
+.players-content p {
+	margin-bottom: 20px;
+}
+
+.players-number {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.players-number button {
+	background-color: rgba(255, 255, 255, 0.3);
+	border: none;
+	border-radius: 8px;
+	padding-top: 1px;
+	padding-bottom: 5px;
+	padding-right: 20px;
+	padding-left: 20px;
+	font-family: 'Nunito', sans-serif;
+	font-size: 60px;
+	font-weight: 900;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	transition: ease 3ms;
+}
+
+.players-number button:hover {
+	background-color: rgba(255, 255, 255, 0.719);
+}
+
+.players-number .minus {
+	padding-right: 23px;
+	padding-left: 23px;
+}
+
+.players-number h1 {
+	background-color: rgba(255, 255, 255, 0.3);
+	border: none;
+	border-radius: 8px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-right: 60px;
+	padding-left: 60px;
+	font-family: 'Nunito', sans-serif;
+	font-size: 60px;
+	font-weight: 900;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	transition: ease 3ms;
 }

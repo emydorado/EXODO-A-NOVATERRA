@@ -8,7 +8,6 @@ import Challenge from './pages/Challenge';
 import Offers from './pages/Offers';
 import BuildingShop from './pages/BuildingShop';
 import Events from './pages/Event';
-
 import './App.css';
 
 function App() {
@@ -16,14 +15,14 @@ function App() {
 		<BrowserRouter>
 			<Routes>
 				<Route path='/' element={<Dashboard />} />
-				<Route path='/StageOne' element={<StageOne />} />
-				<Route path='/StageTwo' element={<StageTwo />} />
-				<Route path='/StageThree' element={<StageThree />} />
-				<Route path='/StageFour' element={<StageFour />} />
-				<Route path='/Challenge' element={<Challenge />} />
-				<Route path='/Offers' element={<Offers />} />
-				<Route path='/BuildingShop' element={<BuildingShop />} />
-				<Route path='/Events' element={<Events />} />
+				<Route path='/stageOne' element={<StageOne />} />
+				<Route path='/stageTwo' element={<StageTwo />} />
+				<Route path='/stageThree' element={<StageThree />} />
+				<Route path='/stageFour' element={<StageFour />} />
+				<Route path='/challenge' element={<Challenge />} />
+				<Route path='/offers' element={<Offers />} />
+				<Route path='/buildingShop' element={<BuildingShop />} />
+				<Route path='/events' element={<Events />} />
 			</Routes>
 		</BrowserRouter>
 	);
