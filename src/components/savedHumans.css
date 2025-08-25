@@ -1,0 +1,33 @@
+#saved-humans {
+	display: flex;
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.3);
+	width: 115px;
+	height: 40px;
+	margin: 20px;
+	border-radius: 8px;
+	padding-left: 8px;
+}
+
+#rounds {
+	display: flex;
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.3);
+	width: 140px;
+	height: 40px;
+	margin: 20px;
+	border-radius: 8px;
+	padding-left: 8px;
+}
+
+#saved-humans h3 {
+	font-weight: 800;
+	font-size: 28px;
+	margin-left: 10px;
+}
+
+#rounds h3 {
+	font-weight: 800;
+	font-size: 28px;
+	margin-left: 10px;
+}

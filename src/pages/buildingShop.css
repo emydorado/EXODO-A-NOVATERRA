@@ -1,0 +1,10 @@
+#buildingShop h2 {
+	text-align: center;
+}
+
+#buildingShop {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 40px;
+}

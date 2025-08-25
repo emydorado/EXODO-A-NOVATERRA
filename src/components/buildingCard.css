@@ -1,0 +1,24 @@
+#building-card {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	background-color: white;
+	margin: 30px;
+	padding: 20px;
+	border-radius: 10px;
+	z-index: 100;
+}
+
+.building-properties {
+	display: flex;
+	flex-direction: column;
+	max-width: 200px;
+	margin-left: 20px;
+	gap: 10px;
+}
+
+.building-properties h3,
+.building-properties p {
+	color: #0b195f;
+}
