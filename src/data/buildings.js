@@ -61,8 +61,8 @@ const buildings = [
 		image: cryoNova,
 		name: 'CRYO-NOVA',
 		cost: 200,
-		capacity: 10,
-		description: 'Guarda hasta 10 personas que excedan la capacidad de una ronda.',
+		capacity: 0,
+		description: 'Congela una oferta que exceda la capacidad de la ronda.',
 	},
 ];
 

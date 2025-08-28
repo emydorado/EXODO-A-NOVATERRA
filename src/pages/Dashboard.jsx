@@ -1,5 +1,5 @@
 import './Dashboard.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import earth from '../assets/earth.png';
 import novaterra from '../assets/novaterra.png';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,14 @@ import { useNavigate } from 'react-router-dom';
 const Dashboard = () => {
 	const navigate = useNavigate();
 	const [players, setPlayers] = useState(3); // valor inicial = mínimo
+
+	useEffect(() => {
+		const prevOverflow = document.body.style.overflow;
+		document.body.style.overflow = 'hidden';
+		return () => {
+			document.body.style.overflow = prevOverflow || 'auto';
+		};
+	}, []);
 
 	const decrease = () => {
 		if (players > 3) {

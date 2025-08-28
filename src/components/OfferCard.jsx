@@ -1,11 +1,11 @@
 import './OfferCard.css';
 
-const OfferCard = ({ capacity, cost, onSelect }) => {
+const OfferCard = ({ capacity, cost, onSelect, carriage }) => {
 	return (
 		<div id='offer-card' onClick={onSelect}>
 			<div className='offer-card-text'>
+				<p>{carriage}</p>
 				<h3>{capacity}</h3>
-				<p>A TRASLADAR</p>
 			</div>
 			<div className='cost-container'>
 				<h2>
