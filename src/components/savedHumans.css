@@ -9,6 +9,22 @@
 	padding-left: 8px;
 }
 
+#capacity {
+	display: flex;
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.3);
+	width: 115px;
+	height: 40px;
+	margin: 20px;
+	border-radius: 8px;
+	padding-left: 8px;
+}
+
+#capacity h3 {
+	margin-left: 25px;
+	margin-top: 2.5px;
+}
+
 #rounds {
 	display: flex;
 	align-items: center;

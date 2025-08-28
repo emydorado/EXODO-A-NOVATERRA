@@ -41,7 +41,7 @@ const buildings = [
 		name: 'REFUGIO',
 		cost: 150,
 		capacity: 20,
-		description: 'Aumenta la capacidad hospedando a más humanos',
+		description: 'Aumenta la capacidad hospedando a más',
 	},
 	{
 		image: nasaNova,

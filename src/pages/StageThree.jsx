@@ -6,7 +6,7 @@ const StageThree = () => {
 		<>
 			<Stages
 				title='¡MOMENTO DE COMPRAR!'
-				description='Asegura tu capacidad siendo el más velóz.'
+				description='Asegura tu capacidad en transporte  siendo el más velóz.'
 				image={coins}
 				btnText='SIGUIENTE'
 				page='/offers'

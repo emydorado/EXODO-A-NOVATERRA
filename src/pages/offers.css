@@ -8,7 +8,12 @@
 
 #offers h2 {
 	margin-top: 50px;
-	margin-bottom: 40px;
+	margin-bottom: 20px;
+}
+
+.capacity-container {
+	display: flex;
+	flex-direction: row;
 }
 
 .timer {
@@ -29,4 +34,46 @@
 
 .timer p {
 	font-size: 20px;
+}
+.custom-alert {
+	position: fixed;
+	top: 253px;
+	right: 50px;
+	font-family: 'Nunito', sans-serif;
+	background: #fee2e2;
+	color: #941327;
+	border: none;
+	border-radius: 10px;
+	padding: 12px 18px;
+	font-size: 14px;
+	font-weight: 600;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+	z-index: 1000;
+	animation: fadeIn 0.3s ease-out, fadeOut 0.5s ease-in 2.5s forwards;
+}
+
+.actual-capacity {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+	z-index: 100;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes fadeOut {
+	to {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
 }

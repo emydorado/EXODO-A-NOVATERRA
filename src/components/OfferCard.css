@@ -1,4 +1,4 @@
-#offer-card {
+.offer-card {
 	background-color: white;
 	display: flex;
 	flex-direction: row;
@@ -10,10 +10,24 @@
 	margin: 20px;
 }
 
-#offer-card h1,
-#offer-card h3,
-#offer-card p {
+.offer-card:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.offer-card--selected {
+	background: #b8dd9c;
+	box-shadow: 0 8px 22px rgba(37, 99, 235, 0.18);
+}
+
+.offer-card-text h1,
+.offer-card-text h3,
+.offer-card-text p {
 	color: #0b195f;
+}
+
+.cost-container h3 {
+	color: white;
 }
 
 .offer-card-text {

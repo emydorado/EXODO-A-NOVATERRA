@@ -1,6 +1,25 @@
+import { useState, useEffect } from 'react';
 import './savedHumans.css';
 
 const SavedHumans = () => {
+	const [totalSelectedCapacity, setTotalSelectedCapacity] = useState(0);
+
+	useEffect(() => {
+		setTotalSelectedCapacity(getTotalSelectedCapacity());
+	}, []);
+
+	function getTotalSelectedCapacity() {
+		const stored = localStorage.getItem('selectedOffers');
+		if (!stored) return 0;
+
+		try {
+			const parsed = JSON.parse(stored);
+			return parsed.reduce((acc, offer) => acc + (offer.capacity || 0), 0);
+		} catch (err) {
+			console.error('Error leyendo selectedOffers:', err);
+			return 0;
+		}
+	}
 	return (
 		<div id='saved-humans'>
 			<svg
@@ -18,7 +37,7 @@ const SavedHumans = () => {
 					clipRule='evenodd'
 				/>
 			</svg>
-			<h3>0</h3>
+			<h3>{totalSelectedCapacity}</h3>
 		</div>
 	);
 };

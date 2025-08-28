@@ -1,16 +1,22 @@
 import './OfferCard.css';
 
-const OfferCard = ({ capacity, cost, onSelect, carriage }) => {
+const OfferCard = ({ capacity, cost, carriage, onClick, isSelected }) => {
 	return (
-		<div id='offer-card' onClick={onSelect}>
+		<div
+			className={`offer-card ${isSelected ? 'offer-card--selected' : ''}`}
+			onClick={onClick}
+			role='button'
+			tabIndex={0}
+			onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClick?.()}
+		>
 			<div className='offer-card-text'>
 				<p>{carriage}</p>
-				<h3>{capacity}</h3>
+				<h3>{capacity} HUMANOS</h3>
 			</div>
 			<div className='cost-container'>
-				<h2>
+				<h3>
 					<b>${cost}</b>
-				</h2>
+				</h3>
 			</div>
 		</div>
 	);
