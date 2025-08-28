@@ -10,7 +10,7 @@ const StageFour = () => {
 				logo={onlyNovaterra}
 				image={people}
 				btnText='SIGUIENTE'
-				page='/event'
+				page='/events'
 			/>
 		</>
 	);
