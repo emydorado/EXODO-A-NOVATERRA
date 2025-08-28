@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import SavedHumans from '../components/SavedHumans';
 import Rounds from '../components/Rounds';
 import BuildingCard from '../components/buildignCard';
-import resources from '../data/buildings';
+import buildings from '../data/buildings';
 import './buildingShop.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ const BuildingShop = () => {
 
 	const [availableBuildings, setAvailableBuildings] = useState(() => {
 		const saved = localStorage.getItem(STORAGE_KEY);
-		return saved ? JSON.parse(saved) : resources;
+		return saved ? JSON.parse(saved) : buildings;
 	});
 
 	const [selectedBuildings, setSelectedBuildings] = useState(() => {
@@ -43,7 +43,7 @@ const BuildingShop = () => {
 			</div>
 			<div id='buildingShop'>
 				<h2>SELECCIONEN EL EDIFICIO</h2>
-				<div className='resources-grid'>
+				<div className='buildings-grid'>
 					{availableBuildings.map((b) => (
 						<BuildingCard
 							key={b.name}
