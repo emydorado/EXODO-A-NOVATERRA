@@ -1,6 +1,6 @@
 h1 {
-	-family: 'Nunito', sans-serif;
-	-weight: 900;
+	font-family: 'Nunito', sans-serif;
+	font-weight: 900;
 	font-size: 60px;
 	color: rgb(255, 255, 255);
 	margin: 0;

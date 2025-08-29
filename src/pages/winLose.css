@@ -1,0 +1,47 @@
+.play-again {
+	z-index: 100;
+	margin: 10px;
+	background-color: #fa8304;
+	border-radius: 12px;
+	height: 45px;
+	width: 260px;
+	border: none;
+	font-family: 'Nunito', sans-serif;
+	font-size: 25px;
+	font-weight: 700;
+	color: white;
+}
+
+#win-lose {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#win-lose h3 {
+	text-align: center;
+}
+
+#win-lose h1 {
+	margin-top: 30px;
+}
+
+#win-lose .lose-img {
+	position: absolute;
+	top: 10px;
+}
+
+#win-lose .win-img {
+	position: absolute;
+	top: 180px;
+}
+
+#win-lose .bottom-text {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: absolute;
+	bottom: 30px;
+	gap: 15px;
+}

@@ -19,7 +19,7 @@ const Challenge = () => {
 	useEffect(() => {
 		const fadeTimer = setTimeout(() => setIsLeaving(true), 2000);
 		const navTimer = setTimeout(() => {
-			navigate('/stageOne', { state: { players } });
+			navigate('/stageTwo', { state: { players } });
 		}, 2500);
 
 		return () => {

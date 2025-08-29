@@ -35,6 +35,21 @@ const BuildingShop = () => {
 		navigate('/stageThree', { state: { building } });
 	};
 
+	const handleSkip = () => {
+		navigate('/stageThree');
+	};
+
+	// si está vacío, solo permitir edificio id 1
+	const filteredBuildings =
+		selectedBuildings.length === 0
+			? availableBuildings.filter((b) => b.id === 1).length > 0
+				? availableBuildings.filter((b) => b.id === 1)
+				: buildings.filter((b) => b.id === 1)
+			: availableBuildings;
+
+	// cambiar texto si ya están los 8
+	const skipText = selectedBuildings.length >= 8 ? 'Continuar' : 'No comprar';
+
 	return (
 		<>
 			<div className='counters'>
@@ -43,10 +58,13 @@ const BuildingShop = () => {
 			</div>
 			<div id='buildingShop'>
 				<h2>SELECCIONEN EL EDIFICIO</h2>
+				<button className='skip' onClick={handleSkip}>
+					{skipText}
+				</button>
 				<div className='buildings-grid'>
-					{availableBuildings.map((b) => (
+					{filteredBuildings.map((b) => (
 						<BuildingCard
-							key={b.name}
+							key={b.id}
 							title={b.name}
 							image={b.image}
 							capacity={b.capacity}

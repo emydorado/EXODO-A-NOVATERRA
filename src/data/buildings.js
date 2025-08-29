@@ -9,6 +9,7 @@ import technology from '../assets/technology.png';
 
 const buildings = [
 	{
+		id: 1,
 		image: oxygen,
 		name: 'OXÍGENO',
 		cost: 200,
@@ -16,6 +17,7 @@ const buildings = [
 		description: 'Habilita el transporte. Sin oxígeno no se pueden mover personas.',
 	},
 	{
+		id: 2,
 		image: energy,
 		name: 'ENERGÍA',
 		cost: 150,
@@ -23,6 +25,7 @@ const buildings = [
 		description: 'Aumenta la capacidad global de transporte.',
 	},
 	{
+		id: 3,
 		image: health,
 		name: 'SALUD',
 		cost: 200,
@@ -30,6 +33,7 @@ const buildings = [
 		description: 'Recibe más heridos y evita un evento negativo en una ronda.',
 	},
 	{
+		id: 4,
 		image: harvest,
 		name: 'COSECHA',
 		cost: 150,
@@ -37,6 +41,7 @@ const buildings = [
 		description: 'Aumenta la capacidad alimentando a más personas.',
 	},
 	{
+		id: 5,
 		image: shelter,
 		name: 'REFUGIO',
 		cost: 150,
@@ -44,6 +49,7 @@ const buildings = [
 		description: 'Aumenta la capacidad hospedando a más',
 	},
 	{
+		id: 6,
 		image: nasaNova,
 		name: 'NASA-NOVA',
 		cost: 200,
@@ -51,6 +57,7 @@ const buildings = [
 		description: 'Aumenta la capacidad y evita un evento negativo en una ronda.',
 	},
 	{
+		id: 7,
 		image: technology,
 		name: 'TECNOLOGÍA',
 		cost: 120,
@@ -58,6 +65,7 @@ const buildings = [
 		description: 'Avances que potencian el transporte y la comunicación.',
 	},
 	{
+		id: 8,
 		image: cryoNova,
 		name: 'CRYO-NOVA',
 		cost: 200,

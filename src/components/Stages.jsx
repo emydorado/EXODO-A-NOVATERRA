@@ -3,11 +3,15 @@ import Rounds from './Rounds';
 import './stages.css';
 import { useNavigate } from 'react-router-dom';
 
-const Stages = ({ title, image, btnText, page, description, logo }) => {
+const Stages = ({ title, image, btnText, page, description, logo, onClick }) => {
 	const navigate = useNavigate();
 
-	const goToNextStage = () => {
-		navigate(page);
+	const handleClick = () => {
+		if (onClick) {
+			onClick(); // usa la lógica personalizada
+		} else if (page) {
+			navigate(page); // fallback a page directo
+		}
 	};
 
 	return (
@@ -20,7 +24,7 @@ const Stages = ({ title, image, btnText, page, description, logo }) => {
 			<img src={logo} className='logo' />
 			<p>{description}</p>
 			<img src={image} />
-			<button onClick={goToNextStage}>{btnText}</button>
+			<button onClick={handleClick}>{btnText}</button>
 		</div>
 	);
 };

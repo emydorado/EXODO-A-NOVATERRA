@@ -7,13 +7,33 @@ import { useState, useEffect, useMemo } from 'react';
 import './offers.css';
 import { useNavigate } from 'react-router-dom';
 
+function getRandomOffers(offers, minId, maxId, count = 5) {
+	const filtered = offers.filter((o) => o.id >= minId && o.id <= maxId);
+	const shuffled = [...filtered].sort(() => 0.5 - Math.random());
+	return shuffled.slice(0, count);
+}
+
 const Offers = () => {
+	const [currentOffers, setCurrentOffers] = useState([]);
 	const [totalCapacity, setTotalCapacity] = useState(0);
 	const [selectedOffers, setSelectedOffers] = useState([]);
-	const [timeLeft, setTimeLeft] = useState(20);
+	const [timeLeft, setTimeLeft] = useState(5);
 	const [errorMsg, setErrorMsg] = useState('');
-
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		const storedRound = parseInt(localStorage.getItem('round') || '1', 10);
+
+		if (storedRound === 1) {
+			setCurrentOffers(getRandomOffers(offers, 1, 11));
+		} else if (storedRound >= 2 && storedRound <= 5) {
+			setCurrentOffers(getRandomOffers(offers, 12, 21));
+		} else if (storedRound >= 6 && storedRound <= 7) {
+			setCurrentOffers(getRandomOffers(offers, 22, 30));
+		} else if (storedRound >= 8 && storedRound <= 10) {
+			setCurrentOffers(getRandomOffers(offers, 31, 39));
+		}
+	}, []);
 
 	useEffect(() => {
 		const stored = localStorage.getItem('selectedBuildings');
@@ -63,8 +83,20 @@ const Offers = () => {
 	};
 
 	//timer
+	//timer
 	useEffect(() => {
 		if (timeLeft <= 0) {
+			// calcular humanos salvados en esta ronda
+			const savedThisRound = selectedOffers.reduce((acc, o) => acc + (o.capacity || 0), 0);
+			const totalSaved = parseInt(localStorage.getItem('totalSavedHumans') || '0', 10);
+
+			// guardar en acumulado global
+			localStorage.setItem('totalSavedHumans', totalSaved + savedThisRound);
+
+			// limpiar las ofertas seleccionadas (solo si quieres que arranque limpia la siguiente ronda)
+			localStorage.removeItem('selectedOffers');
+
+			// navegar a stageFour
 			navigate('/stageFour');
 			return;
 		}
@@ -74,7 +106,7 @@ const Offers = () => {
 		}, 1000);
 
 		return () => clearInterval(interval);
-	}, [timeLeft, navigate]);
+	}, [timeLeft, navigate, selectedOffers]);
 
 	return (
 		<div id='offers'>
@@ -99,23 +131,23 @@ const Offers = () => {
 					<Capacity number={remainingCapacity} />
 				</div>
 			</div>
-			{offers.map((offer, idx) => {
-				const isSelected = !!selectedOffers.find((o) => o.id === offer.id);
-				const wouldExceed = !isSelected && offer.capacity > remainingCapacity;
-
-				return (
-					<OfferCard
-						key={`${offer.id}-${idx}`}
-						carriage={offer.carriage}
-						capacity={offer.capacity}
-						cost={offer.cost}
-						onClick={() => handleToggleOffer(offer)}
-						isSelected={isSelected}
-						disabled={wouldExceed}
-					/>
-				);
-			})}
-
+			<div className='offer-cards'>
+				{currentOffers.map((offer) => {
+					const isSelected = !!selectedOffers.find((o) => o.id === offer.id);
+					const wouldExceed = !isSelected && offer.capacity > remainingCapacity;
+					return (
+						<OfferCard
+							key={offer.id}
+							carriage={offer.carriage}
+							capacity={offer.capacity}
+							cost={offer.cost}
+							onClick={() => handleToggleOffer(offer)}
+							isSelected={isSelected}
+							disabled={wouldExceed}
+						/>
+					);
+				})}
+			</div>
 			<div className='timer'>
 				<h3>
 					<b>Tiempo Restante</b>

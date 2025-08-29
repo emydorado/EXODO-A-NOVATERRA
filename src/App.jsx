@@ -8,6 +8,8 @@ import Challenge from './pages/Challenge';
 import Offers from './pages/Offers';
 import BuildingShop from './pages/BuildingShop';
 import Events from './pages/Event';
+import Win from './pages/Win';
+import Lose from './pages/Lose';
 import './App.css';
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
 				<Route path='/offers' element={<Offers />} />
 				<Route path='/buildingShop' element={<BuildingShop />} />
 				<Route path='/events' element={<Events />} />
+				<Route path='/win' element={<Win />} />
+				<Route path='/lose' element={<Lose />} />
 			</Routes>
 		</BrowserRouter>
 	);
