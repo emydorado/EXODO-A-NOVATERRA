@@ -4,10 +4,12 @@ import './savedHumans.css';
 const SavedHumans = () => {
 	const [totalSaved, setTotalSaved] = useState(0);
 
+	//traer total de humanos salvados
 	useEffect(() => {
 		const stored = localStorage.getItem('totalSavedHumans');
 		setTotalSaved(parseInt(stored || '0', 10));
 	}, []);
+
 	return (
 		<div id='saved-humans'>
 			<svg

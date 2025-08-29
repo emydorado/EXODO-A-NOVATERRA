@@ -29,14 +29,14 @@ const events = [
 		image: warning,
 		alert: 'ALERTA EXODITAS',
 		title: '¡Fuga de recursos!',
-		description: 'Cada jugador pierde $10.',
+		description: 'Cada jugador le paga $10 al banco.',
 	},
 	{
 		id: 5,
 		image: warning,
 		alert: 'ALERTA EXODITAS',
 		title: '¡Estafa de suministros!',
-		description: 'Cada jugador pierde $20.',
+		description: 'Cada jugador pierde le paga $20 al banco.',
 	},
 
 	// postivos
@@ -46,7 +46,7 @@ const events = [
 		image: check,
 		alert: 'INCREÍBLE EXODITAS',
 		title: '¡Bonificación universal!',
-		description: 'Todos reciben +$15.',
+		description: 'Todos reciben $10 del banco.',
 	},
 	{
 		id: 7,
@@ -60,21 +60,21 @@ const events = [
 		image: check,
 		alert: 'INCREÍBLE EXODITAS',
 		title: '¡Nuevos avances tecnológicos!',
-		description: 'Cada jugador recibe +5 de capacidad extra en la próxima ronda.',
+		description: 'Reciben +5 de capacidad extra en la próxima ronda.',
 	},
 	{
 		id: 9,
 		image: check,
 		alert: 'INCREÍBLE EXODITAS',
 		title: '¡Subsidio general!',
-		description: 'Todos reciben +$10.',
+		description: 'Todos reciben $30 del banco.',
 	},
 	{
 		id: 10,
 		image: check,
 		alert: 'INCREÍBLE EXODITAS',
 		title: '¡Motivación de la humanidad!',
-		description: 'Cada jugador recibe +$25 al inicio de la siguiente ronda.',
+		description: 'Cada jugador le da $10 al juagdor con menos dinero.',
 	},
 ];
 

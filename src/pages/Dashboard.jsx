@@ -29,6 +29,7 @@ const Dashboard = () => {
 	};
 
 	const goToChallenge = () => {
+		localStorage.setItem('players', players);
 		navigate('/challenge', { state: { players } });
 	};
 

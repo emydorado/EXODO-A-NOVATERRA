@@ -9,9 +9,7 @@ const Event = () => {
 	const navigate = useNavigate();
 
 	const randomEvent = useMemo(() => {
-		if (events.length === 0) return null;
-		const idx = Math.floor(Math.random() * events.length);
-		return events[idx];
+		return events.find((e) => e.id === 1) || null;
 	}, []);
 
 	if (!randomEvent) return null;
@@ -20,10 +18,33 @@ const Event = () => {
 		// guardar el id del evento
 		localStorage.setItem('lastEventId', randomEvent.id);
 
+		// aplicar efecto del evento si corresponde
+		if (randomEvent.id === 1) {
+			const storedBuildings = localStorage.getItem('selectedBuildings');
+			if (storedBuildings) {
+				try {
+					const parsed = JSON.parse(storedBuildings);
+					const hasBuilding3 = parsed.some((b) => b.id === 3);
+
+					if (!hasBuilding3) {
+						const players = parseInt(localStorage.getItem('players') || '3', 10);
+						const penalty = players * 5;
+						const saved = parseInt(localStorage.getItem('totalSavedHumans') || '0', 10);
+
+						const newTotal = Math.max(0, saved - penalty);
+						localStorage.setItem('totalSavedHumans', newTotal);
+					}
+				} catch (err) {
+					console.error('Error leyendo selectedBuildings:', err);
+				}
+			}
+		}
+
 		// actualizar ronda
 		const currentRound = parseInt(localStorage.getItem('round') || '1', 10);
 		localStorage.setItem('round', currentRound + 1);
 
+		// navegar a la siguiente fase
 		navigate('/stageOne');
 	};
 
