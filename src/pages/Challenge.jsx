@@ -11,9 +11,11 @@ const Challenge = () => {
 	const [isLeaving, setIsLeaving] = useState(false);
 
 	const numberChallenge = () => {
-		if (players === 3) return 400;
-		if (players === 4 || players === 5) return 550;
-		return 700;
+		if (players === 3) return 250;
+		if (players === 4) return 350;
+		if (players === 5) return 400;
+
+		return 500;
 	};
 
 	useEffect(() => {

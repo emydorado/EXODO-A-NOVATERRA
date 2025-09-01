@@ -17,7 +17,7 @@ const Offers = () => {
 	const [currentOffers, setCurrentOffers] = useState([]);
 	const [totalCapacity, setTotalCapacity] = useState(0);
 	const [selectedOffers, setSelectedOffers] = useState([]);
-	const [timeLeft, setTimeLeft] = useState(5);
+	const [timeLeft, setTimeLeft] = useState(30);
 	const [errorMsg, setErrorMsg] = useState('');
 	const navigate = useNavigate();
 
@@ -32,16 +32,6 @@ const Offers = () => {
 			setCurrentOffers(getRandomOffers(offers, 22, 30));
 		} else if (storedRound >= 8 && storedRound <= 10) {
 			setCurrentOffers(getRandomOffers(offers, 31, 39));
-		}
-	}, []);
-
-	useEffect(() => {
-		const stored = localStorage.getItem('selectedBuildings');
-
-		if (stored) {
-			const parsed = JSON.parse(stored);
-			const sum = parsed.reduce((acc, building) => acc + (building.capacity || 0), 0);
-			setTotalCapacity(sum);
 		}
 	}, []);
 
@@ -82,21 +72,38 @@ const Offers = () => {
 		setSelectedOffers((prev) => [...prev, offer]);
 	};
 
-	//timer
+	useEffect(() => {
+		const stored = localStorage.getItem('selectedBuildings');
+		const bonus = Number(localStorage.getItem('capacityBonus') || 0);
+
+		let sum = 0;
+		if (stored) {
+			try {
+				const parsed = JSON.parse(stored);
+				sum = parsed.reduce((acc, b) => acc + (b.capacity || 0), 0);
+			} catch (e) {
+				console.error('Error leyendo selectedBuildings:', e);
+			}
+		}
+
+		setTotalCapacity(sum + bonus);
+	}, []);
+
 	//timer
 	useEffect(() => {
 		if (timeLeft <= 0) {
-			// calcular humanos salvados en esta ronda
+			// 1) sumar humanos de esta ronda
 			const savedThisRound = selectedOffers.reduce((acc, o) => acc + (o.capacity || 0), 0);
 			const totalSaved = parseInt(localStorage.getItem('totalSavedHumans') || '0', 10);
-
-			// guardar en acumulado global
 			localStorage.setItem('totalSavedHumans', totalSaved + savedThisRound);
 
-			// limpiar las ofertas seleccionadas (solo si quieres que arranque limpia la siguiente ronda)
+			// 2) limpiar ofertas de la ronda
 			localStorage.removeItem('selectedOffers');
 
-			// navegar a stageFour
+			// 3) limpiar bonus TEMPORAL (se consumió esta ronda)
+			localStorage.removeItem('capacityBonus');
+
+			// 4) navegar a stageFour
 			navigate('/stageFour');
 			return;
 		}

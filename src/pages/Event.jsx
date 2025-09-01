@@ -9,7 +9,9 @@ const Event = () => {
 	const navigate = useNavigate();
 
 	const randomEvent = useMemo(() => {
-		return events.find((e) => e.id === 1) || null;
+		if (events.length === 0) return null;
+		const idx = Math.floor(Math.random() * events.length);
+		return events[idx];
 	}, []);
 
 	if (!randomEvent) return null;
@@ -18,7 +20,7 @@ const Event = () => {
 		// guardar el id del evento
 		localStorage.setItem('lastEventId', randomEvent.id);
 
-		// aplicar efecto del evento si corresponde
+		// aplicar evento 1
 		if (randomEvent.id === 1) {
 			const storedBuildings = localStorage.getItem('selectedBuildings');
 			if (storedBuildings) {
@@ -38,6 +40,50 @@ const Event = () => {
 					console.error('Error leyendo selectedBuildings:', err);
 				}
 			}
+		}
+
+		// aplicar evento 2
+
+		if (randomEvent.id === 2) {
+			const storedBuildings = localStorage.getItem('selectedBuildings');
+			if (storedBuildings) {
+				try {
+					const parsed = JSON.parse(storedBuildings);
+					const hasBuilding6 = parsed.some((b) => b.id === 6);
+
+					if (!hasBuilding6) {
+						const updated = parsed.slice(0, -1);
+						localStorage.setItem('selectedBuildings', JSON.stringify(updated));
+					}
+				} catch (err) {
+					console.error('Error leyendo selectedBuildings:', err);
+				}
+			}
+		}
+
+		// aplicar evento 3
+		if (randomEvent.id === 3) {
+			const penalty = 10;
+			const saved = parseInt(localStorage.getItem('totalSavedHumans') || '0', 10);
+
+			const newTotal = Math.max(0, saved - penalty);
+			localStorage.setItem('totalSavedHumans', newTotal);
+		}
+
+		// aplicar evento 7
+
+		if (randomEvent.id === 7) {
+			const penalty = 10;
+			const saved = parseInt(localStorage.getItem('totalSavedHumans') || '0', 10);
+
+			const newTotal = Math.max(0, saved + penalty);
+			localStorage.setItem('totalSavedHumans', newTotal);
+		}
+
+		// aplicar evento 8
+
+		if (randomEvent.id === 8) {
+			localStorage.setItem('capacityBonus', '10');
 		}
 
 		// actualizar ronda

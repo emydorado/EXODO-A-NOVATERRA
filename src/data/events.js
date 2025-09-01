@@ -60,7 +60,7 @@ const events = [
 		image: check,
 		alert: 'INCREÍBLE EXODITAS',
 		title: '¡Nuevos avances tecnológicos!',
-		description: 'Reciben +5 de capacidad extra en la próxima ronda.',
+		description: 'Reciben +10 de capacidad extra en la próxima ronda.',
 	},
 	{
 		id: 9,

@@ -23,7 +23,7 @@ const Dashboard = () => {
 	};
 
 	const increase = () => {
-		if (players < 8) {
+		if (players < 6) {
 			setPlayers(players + 1);
 		}
 	};
