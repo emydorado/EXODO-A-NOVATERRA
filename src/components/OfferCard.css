@@ -48,3 +48,27 @@
 	color: white;
 	font-weight: bold;
 }
+
+.freeze-btn {
+	background-color: #fa8304;
+	border-radius: 7px;
+	height: 25px;
+	width: 160px;
+	border: none;
+	font-family: 'Nunito', sans-serif;
+	font-size: 15px;
+	font-weight: 700;
+	color: white;
+}
+
+.freeze-btn.active {
+	background-color: #68a1de;
+	border-radius: 7px;
+	height: 25px;
+	width: 160px;
+	border: none;
+	font-family: 'Nunito', sans-serif;
+	font-size: 15px;
+	font-weight: 700;
+	color: white;
+}

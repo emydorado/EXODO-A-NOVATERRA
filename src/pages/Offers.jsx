@@ -19,27 +19,63 @@ const Offers = () => {
 	const [selectedOffers, setSelectedOffers] = useState([]);
 	const [timeLeft, setTimeLeft] = useState(30);
 	const [errorMsg, setErrorMsg] = useState('');
+	const [hasCryoNova, setHasCryoNova] = useState(false);
+	const [frozenOffer, setFrozenOffer] = useState(() => {
+		const raw = localStorage.getItem('frozenOffer');
+		return raw ? JSON.parse(raw) : null;
+	});
 	const navigate = useNavigate();
+
+	const saveFrozenOffer = (offerOrNull) => {
+		setFrozenOffer(offerOrNull);
+		if (offerOrNull) {
+			localStorage.setItem('frozenOffer', JSON.stringify(offerOrNull));
+		} else {
+			localStorage.removeItem('frozenOffer');
+		}
+	};
 
 	useEffect(() => {
 		const storedRound = parseInt(localStorage.getItem('round') || '1', 10);
+		let base = [];
 
 		if (storedRound === 1) {
-			setCurrentOffers(getRandomOffers(offers, 1, 11));
+			base = getRandomOffers(offers, 1, 11);
 		} else if (storedRound >= 2 && storedRound <= 5) {
-			setCurrentOffers(getRandomOffers(offers, 12, 21));
+			base = getRandomOffers(offers, 12, 21);
 		} else if (storedRound >= 6 && storedRound <= 7) {
-			setCurrentOffers(getRandomOffers(offers, 22, 30));
+			base = getRandomOffers(offers, 22, 30);
 		} else if (storedRound >= 8 && storedRound <= 10) {
-			setCurrentOffers(getRandomOffers(offers, 31, 39));
+			base = getRandomOffers(offers, 31, 39);
 		}
-	}, []);
+
+		// Inyectar frozenOffer si existe:
+		if (frozenOffer) {
+			const already = base.some((o) => o.id === frozenOffer.id);
+			if (!already) {
+				// Reemplaza la primera oferta para garantizar espacio
+				if (base.length > 0) {
+					base = [frozenOffer, ...base.slice(1)];
+				} else {
+					base = [frozenOffer];
+				}
+			}
+		}
+
+		setCurrentOffers(base);
+		// Nota: dependemos de frozenOffer, para reinyectarla si cambia
+	}, [frozenOffer]);
 
 	// traer ofertas seleccionadas
 	useEffect(() => {
-		const stored = localStorage.getItem('selectedOffers');
+		const stored = localStorage.getItem('selectedBuildings');
 		if (stored) {
-			setSelectedOffers(JSON.parse(stored));
+			try {
+				const parsed = JSON.parse(stored);
+				setHasCryoNova(parsed.some((b) => b.id === 8));
+			} catch (e) {
+				console.error('Error leyendo selectedBuildings:', e);
+			}
 		}
 	}, []);
 
@@ -70,6 +106,10 @@ const Offers = () => {
 		}
 
 		setSelectedOffers((prev) => [...prev, offer]);
+
+		if (frozenOffer && frozenOffer.id === offer.id) {
+			saveFrozenOffer(null);
+		}
 	};
 
 	useEffect(() => {
@@ -115,6 +155,18 @@ const Offers = () => {
 		return () => clearInterval(interval);
 	}, [timeLeft, navigate, selectedOffers]);
 
+	const handleFreezeToggle = (offer) => {
+		if (!hasCryoNova) return; // seguridad
+
+		// Si ya está congelada esta misma, la descongela
+		if (frozenOffer && frozenOffer.id === offer.id) {
+			saveFrozenOffer(null);
+			return;
+		}
+		// Reemplaza la anterior (solo una a la vez)
+		saveFrozenOffer(offer);
+	};
+
 	return (
 		<div id='offers'>
 			{errorMsg && (
@@ -142,6 +194,8 @@ const Offers = () => {
 				{currentOffers.map((offer) => {
 					const isSelected = !!selectedOffers.find((o) => o.id === offer.id);
 					const wouldExceed = !isSelected && offer.capacity > remainingCapacity;
+					const isThisFrozen = frozenOffer && frozenOffer.id === offer.id;
+
 					return (
 						<OfferCard
 							key={offer.id}
@@ -151,6 +205,10 @@ const Offers = () => {
 							onClick={() => handleToggleOffer(offer)}
 							isSelected={isSelected}
 							disabled={wouldExceed}
+							// --- NUEVO: control de congelado ---
+							canFreeze={hasCryoNova}
+							isFrozen={!!isThisFrozen}
+							onFreezeToggle={() => handleFreezeToggle(offer)}
 						/>
 					);
 				})}
