@@ -7,64 +7,70 @@ import { useState, useEffect, useMemo } from 'react';
 import './offers.css';
 import { useNavigate } from 'react-router-dom';
 
-function getRandomOffers(offers, minId, maxId, count = 5) {
-	const filtered = offers.filter((o) => o.id >= minId && o.id <= maxId);
+function pickRange(round) {
+	if (round >= 1 && round <= 2) return [1, 11];
+	if (round >= 3 && round <= 4) return [12, 21];
+	if (round >= 5 && round <= 6) return [22, 30];
+	return [31, 39]; // 7-10 (ajusta a tus tramos exactos)
+}
+
+function getRandomOffers(offers, minId, maxId, count = 5, excludeIds = []) {
+	const filtered = offers.filter((o) => o.id >= minId && o.id <= maxId && !excludeIds.includes(o.id));
 	const shuffled = [...filtered].sort(() => 0.5 - Math.random());
 	return shuffled.slice(0, count);
 }
 
 const Offers = () => {
 	const [currentOffers, setCurrentOffers] = useState([]);
-	const [totalCapacity, setTotalCapacity] = useState(0);
+	const [totalCapacity, setTotalCapacity] = useState(null);
 	const [selectedOffers, setSelectedOffers] = useState([]);
 	const [timeLeft, setTimeLeft] = useState(30);
 	const [errorMsg, setErrorMsg] = useState('');
 	const [hasCryoNova, setHasCryoNova] = useState(false);
-	const [frozenOffer, setFrozenOffer] = useState(() => {
+	const [successMsg, setSuccessMsg] = useState('');
+	const [frozenId, setFrozenId] = useState(() => {
 		const raw = localStorage.getItem('frozenOffer');
-		return raw ? JSON.parse(raw) : null;
+		return raw ? JSON.parse(raw).id : null;
 	});
+
+	const [round, setRound] = useState(() => parseInt(localStorage.getItem('round') || '1', 10));
+
 	const navigate = useNavigate();
 
-	const saveFrozenOffer = (offerOrNull) => {
-		setFrozenOffer(offerOrNull);
-		if (offerOrNull) {
-			localStorage.setItem('frozenOffer', JSON.stringify(offerOrNull));
-		} else {
-			localStorage.removeItem('frozenOffer');
-		}
-	};
+	useEffect(() => {
+		const read = () => {
+			const r = parseInt(localStorage.getItem('round') || '1', 10);
+			setRound((prev) => (prev !== r ? r : prev));
+		};
+		const onStorage = (e) => {
+			if (e.key === 'round') read();
+		};
+		window.addEventListener('storage', onStorage);
+		const id = setInterval(read, 400); // asegura cambios en el mismo tab
+		return () => {
+			window.removeEventListener('storage', onStorage);
+			clearInterval(id);
+		};
+	}, []);
 
 	useEffect(() => {
-		const storedRound = parseInt(localStorage.getItem('round') || '1', 10);
-		let base = [];
+		const [minId, maxId] = pickRange(round);
 
-		if (storedRound === 1) {
-			base = getRandomOffers(offers, 1, 11);
-		} else if (storedRound >= 2 && storedRound <= 5) {
-			base = getRandomOffers(offers, 12, 21);
-		} else if (storedRound >= 6 && storedRound <= 7) {
-			base = getRandomOffers(offers, 22, 30);
-		} else if (storedRound >= 8 && storedRound <= 10) {
-			base = getRandomOffers(offers, 31, 39);
-		}
+		const frozenRaw = localStorage.getItem('frozenOffer');
+		const frozenObj = frozenRaw ? JSON.parse(frozenRaw) : null;
 
-		// Inyectar frozenOffer si existe:
-		if (frozenOffer) {
-			const already = base.some((o) => o.id === frozenOffer.id);
-			if (!already) {
-				// Reemplaza la primera oferta para garantizar espacio
-				if (base.length > 0) {
-					base = [frozenOffer, ...base.slice(1)];
-				} else {
-					base = [frozenOffer];
-				}
-			}
+		const N = 5; // o 3, según tu UI
+		const exclude = frozenObj ? [frozenObj.id] : [];
+
+		let base = getRandomOffers(offers, minId, maxId, N, exclude);
+
+		// Si quieres exactamente N cartas y hay congelada, anteponla y recorta
+		if (frozenObj) {
+			base = [frozenObj, ...base].slice(0, N);
 		}
 
 		setCurrentOffers(base);
-		// Nota: dependemos de frozenOffer, para reinyectarla si cambia
-	}, [frozenOffer]);
+	}, [round, frozenId]); // <- clave
 
 	// traer ofertas seleccionadas
 	useEffect(() => {
@@ -92,24 +98,26 @@ const Offers = () => {
 	const remainingCapacity = Math.max(0, totalCapacity - selectedCapacity);
 
 	const handleToggleOffer = (offer) => {
-		if (selectedOffers.find((o) => o.id === offer.id)) {
+		const isSelected = selectedOffers.some((o) => o.id === offer.id);
+		if (isSelected) {
 			setSelectedOffers((prev) => prev.filter((o) => o.id !== offer.id));
 			return;
 		}
-
 		if (selectedCapacity + (offer.capacity || 0) > totalCapacity) {
 			setErrorMsg('');
-			setTimeout(() => {
-				setErrorMsg('No puedes exceder la capacidad disponible.');
-			}, 0);
+			setTimeout(() => setErrorMsg('No puedes exceder la capacidad disponible.'), 0);
 			return;
 		}
 
-		setSelectedOffers((prev) => [...prev, offer]);
+		if (frozenId && offer.id === frozenId) {
+			localStorage.removeItem('frozenOffer');
+			setFrozenId(null); // <- rebuild por efecto
 
-		if (frozenOffer && frozenOffer.id === offer.id) {
-			saveFrozenOffer(null);
+			setSuccessMsg('Oferta congelada comprada con éxito');
+			setTimeout(() => setSuccessMsg(''), 2000); // opcional: ocultar a los 2s
 		}
+
+		setSelectedOffers((prev) => [...prev, offer]);
 	};
 
 	useEffect(() => {
@@ -132,6 +140,11 @@ const Offers = () => {
 	//timer
 	useEffect(() => {
 		if (timeLeft <= 0) {
+			//guardar snapshot de compras de la ronda ---
+			localStorage.setItem('lastRoundOffers', JSON.stringify(selectedOffers));
+			const totalCost = selectedOffers.reduce((acc, o) => acc + (o.cost || 0), 0);
+			localStorage.setItem('lastRoundTotalCost', String(totalCost));
+
 			// 1) sumar humanos de esta ronda
 			const savedThisRound = selectedOffers.reduce((acc, o) => acc + (o.capacity || 0), 0);
 			const totalSaved = parseInt(localStorage.getItem('totalSavedHumans') || '0', 10);
@@ -156,15 +169,19 @@ const Offers = () => {
 	}, [timeLeft, navigate, selectedOffers]);
 
 	const handleFreezeToggle = (offer) => {
-		if (!hasCryoNova) return; // seguridad
+		if (!hasCryoNova) return;
 
-		// Si ya está congelada esta misma, la descongela
-		if (frozenOffer && frozenOffer.id === offer.id) {
-			saveFrozenOffer(null);
+		const raw = localStorage.getItem('frozenOffer');
+		const already = raw ? JSON.parse(raw) : null;
+
+		if (already && already.id === offer.id) {
+			localStorage.removeItem('frozenOffer');
+			setFrozenId(null); // <- dispara el efecto de rebuild
 			return;
 		}
-		// Reemplaza la anterior (solo una a la vez)
-		saveFrozenOffer(offer);
+
+		localStorage.setItem('frozenOffer', JSON.stringify(offer));
+		setFrozenId(offer.id); // <- dispara el efecto de rebuild
 	};
 
 	return (
@@ -172,6 +189,12 @@ const Offers = () => {
 			{errorMsg && (
 				<div className='custom-alert'>
 					<span>{errorMsg}</span>
+				</div>
+			)}
+
+			{successMsg && (
+				<div className='succes-alert'>
+					<span>{successMsg}</span>
 				</div>
 			)}
 
@@ -194,7 +217,7 @@ const Offers = () => {
 				{currentOffers.map((offer) => {
 					const isSelected = !!selectedOffers.find((o) => o.id === offer.id);
 					const wouldExceed = !isSelected && offer.capacity > remainingCapacity;
-					const isThisFrozen = frozenOffer && frozenOffer.id === offer.id;
+					const isFrozenThisCard = frozenId === offer.id;
 
 					return (
 						<OfferCard
@@ -202,12 +225,18 @@ const Offers = () => {
 							carriage={offer.carriage}
 							capacity={offer.capacity}
 							cost={offer.cost}
-							onClick={() => handleToggleOffer(offer)}
+							onClick={() => {
+								if (wouldExceed) {
+									setErrorMsg('');
+									setTimeout(() => setErrorMsg('No puedes exceder la capacidad disponible.'), 0);
+									return;
+								}
+								handleToggleOffer(offer);
+							}}
 							isSelected={isSelected}
 							disabled={wouldExceed}
-							// --- NUEVO: control de congelado ---
 							canFreeze={hasCryoNova}
-							isFrozen={!!isThisFrozen}
+							isFrozen={isFrozenThisCard}
 							onFreezeToggle={() => handleFreezeToggle(offer)}
 						/>
 					);

@@ -4,6 +4,7 @@ import StageOne from './pages/StageOne';
 import StageTwo from './pages/StageTwo';
 import StageThree from './pages/StageThree';
 import StageFour from './pages/StageFour';
+import StageFive from './pages/StageFive';
 import Challenge from './pages/Challenge';
 import Offers from './pages/Offers';
 import BuildingShop from './pages/BuildingShop';
@@ -21,6 +22,7 @@ function App() {
 				<Route path='/stageTwo' element={<StageTwo />} />
 				<Route path='/stageThree' element={<StageThree />} />
 				<Route path='/stageFour' element={<StageFour />} />
+				<Route path='/stageFive' element={<StageFive />} />
 				<Route path='/challenge' element={<Challenge />} />
 				<Route path='/offers' element={<Offers />} />
 				<Route path='/buildingShop' element={<BuildingShop />} />

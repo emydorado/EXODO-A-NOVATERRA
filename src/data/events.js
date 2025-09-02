@@ -36,7 +36,7 @@ const events = [
 		image: warning,
 		alert: 'ALERTA EXODITAS',
 		title: '¡Estafa de suministros!',
-		description: 'Cada jugador pierde le paga $20 al banco.',
+		description: 'Cada jugador le paga $15 al banco.',
 	},
 
 	// postivos
@@ -46,7 +46,7 @@ const events = [
 		image: check,
 		alert: 'INCREÍBLE EXODITAS',
 		title: '¡Bonificación universal!',
-		description: 'Todos reciben $10 del banco.',
+		description: 'Todos reciben $15 del banco.',
 	},
 	{
 		id: 7,
@@ -67,14 +67,14 @@ const events = [
 		image: check,
 		alert: 'INCREÍBLE EXODITAS',
 		title: '¡Subsidio general!',
-		description: 'Todos reciben $30 del banco.',
+		description: 'Todos reciben $20 del banco.',
 	},
 	{
 		id: 10,
 		image: check,
 		alert: 'INCREÍBLE EXODITAS',
 		title: '¡Motivación de la humanidad!',
-		description: 'Cada jugador le da $10 al juagdor con menos dinero.',
+		description: 'Cada jugador le da $15 al juagdor con menos dinero.',
 	},
 ];
 

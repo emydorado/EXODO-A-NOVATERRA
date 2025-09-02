@@ -6,7 +6,7 @@ const StageOne = () => {
 		<>
 			<Stages
 				title='¡MOMENTO DE RECIBIR DINERO!'
-				description='Cada jugador toma 50k'
+				description='Cada jugador recibe $60 del banco'
 				image={money}
 				btnText='HECHO'
 				page='/stageTwo'

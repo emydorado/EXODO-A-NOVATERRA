@@ -1,0 +1,50 @@
+#stage-four {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+	min-height: 100vh;
+}
+
+.counters {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	margin-top: 6%;
+	z-index: 100;
+}
+
+#stage-four h2 {
+	font-weight: 900;
+	font-size: 35px;
+	text-align: center;
+	max-width: 400px;
+	margin-top: 60px;
+	margin-bottom: 10px;
+}
+
+.stage-four-descript {
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+.stage-four-tip {
+	z-index: 100;
+	position: absolute;
+	bottom: 130px;
+}
+
+#stage-four button {
+	z-index: 100;
+	position: absolute;
+	bottom: 40px;
+	background-color: #fa8304;
+	border-radius: 12px;
+	height: 75px;
+	width: 350px;
+	border: none;
+	font-family: 'Nunito', sans-serif;
+	font-size: 30px;
+	font-weight: 800;
+	color: white;
+}
