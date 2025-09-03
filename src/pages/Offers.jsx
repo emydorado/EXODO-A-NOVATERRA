@@ -14,7 +14,7 @@ function pickRange(round) {
 	return [31, 39]; // 7-10 (ajusta a tus tramos exactos)
 }
 
-function getRandomOffers(offers, minId, maxId, count = 5, excludeIds = []) {
+function getRandomOffers(offers, minId, maxId, count = 6, excludeIds = []) {
 	const filtered = offers.filter((o) => o.id >= minId && o.id <= maxId && !excludeIds.includes(o.id));
 	const shuffled = [...filtered].sort(() => 0.5 - Math.random());
 	return shuffled.slice(0, count);
@@ -24,7 +24,7 @@ const Offers = () => {
 	const [currentOffers, setCurrentOffers] = useState([]);
 	const [totalCapacity, setTotalCapacity] = useState(null);
 	const [selectedOffers, setSelectedOffers] = useState([]);
-	const [timeLeft, setTimeLeft] = useState(30);
+	const [timeLeft, setTimeLeft] = useState(5);
 	const [errorMsg, setErrorMsg] = useState('');
 	const [hasCryoNova, setHasCryoNova] = useState(false);
 	const [successMsg, setSuccessMsg] = useState('');
@@ -59,7 +59,7 @@ const Offers = () => {
 		const frozenRaw = localStorage.getItem('frozenOffer');
 		const frozenObj = frozenRaw ? JSON.parse(frozenRaw) : null;
 
-		const N = 5; // o 3, según tu UI
+		const N = 6; // o 3, según tu UI
 		const exclude = frozenObj ? [frozenObj.id] : [];
 
 		let base = getRandomOffers(offers, minId, maxId, N, exclude);

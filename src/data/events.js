@@ -53,7 +53,8 @@ const events = [
 		image: check,
 		alert: 'INCREÍBLE EXODITAS',
 		title: '¡Apoyen a los rezagados!',
-		description: 'Los 2 jugadores con menos personas salvadas reciben +5 cada uno',
+		description:
+			'El jugador con menos humanos salvados recibe +5 humanos. Si varios jugadores tienen la misma cantidad, lancen el dado.',
 	},
 	{
 		id: 8,

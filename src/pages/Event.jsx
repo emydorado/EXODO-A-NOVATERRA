@@ -4,21 +4,40 @@ import SavedHumans from '../components/SavedHumans';
 import Rounds from '../components/Rounds';
 import './event.css';
 import { useNavigate } from 'react-router-dom';
+import buildings from '../data/buildings';
 
 const Event = () => {
 	const navigate = useNavigate();
 
 	const randomEvent = useMemo(() => {
 		if (events.length === 0) return null;
-		const idx = Math.floor(Math.random() * events.length);
-		return events[idx];
+
+		// Cargar eventos ya usados del localStorage
+		const usedEvents = JSON.parse(localStorage.getItem('usedEvents') || '[]');
+
+		// Filtrar los no usados
+		const availableEvents = events.filter((e) => !usedEvents.includes(e.id));
+
+		if (availableEvents.length === 0) {
+			// Si ya usamos todos, reiniciamos para empezar de nuevo
+			localStorage.setItem('usedEvents', JSON.stringify([]));
+			return null;
+		}
+
+		// Elegir uno aleatorio de los disponibles
+		const idx = Math.floor(Math.random() * availableEvents.length);
+		return availableEvents[idx];
 	}, []);
 
 	if (!randomEvent) return null;
 
+	console.log(randomEvent);
+
 	const handleNext = () => {
 		// guardar el id del evento
-		localStorage.setItem('lastEventId', randomEvent.id);
+		const usedEvents = JSON.parse(localStorage.getItem('usedEvents') || '[]');
+		usedEvents.push(randomEvent.id);
+		localStorage.setItem('usedEvents', JSON.stringify(usedEvents));
 
 		// aplicar evento 1
 		if (randomEvent.id === 1) {
@@ -42,21 +61,69 @@ const Event = () => {
 			}
 		}
 
-		// aplicar evento 2
-
+		// === evento 2: borra el último edificio si NO tienes el 6, pero lo regresa a la tienda ===
 		if (randomEvent.id === 2) {
-			const storedBuildings = localStorage.getItem('selectedBuildings');
+			const STORAGE_AVAILABLE = 'availableBuildings';
+			const STORAGE_SELECTED = 'selectedBuildings';
+
+			const safeJSON = (raw, fallback) => {
+				try {
+					return raw ? JSON.parse(raw) : fallback;
+				} catch {
+					return fallback;
+				}
+			};
+
+			const dedupeById = (arr) => {
+				const seen = new Set();
+				const res = [];
+				for (const it of arr) {
+					if (!seen.has(it.id)) {
+						seen.add(it.id);
+						res.push(it);
+					}
+				}
+				return res;
+			};
+
+			const storedBuildings = localStorage.getItem(STORAGE_SELECTED);
 			if (storedBuildings) {
 				try {
-					const parsed = JSON.parse(storedBuildings);
-					const hasBuilding6 = parsed.some((b) => b.id === 6);
+					const selected = safeJSON(storedBuildings, []);
+					const hasBuilding6 = selected.some((b) => b.id === 6);
 
-					if (!hasBuilding6) {
-						const updated = parsed.slice(0, -1);
-						localStorage.setItem('selectedBuildings', JSON.stringify(updated));
+					if (!hasBuilding6 && selected.length > 0) {
+						// 1) sacar el último edificio seleccionado
+						const removedBuilding = selected[selected.length - 1];
+						const updatedSelected = selected.slice(0, -1);
+						localStorage.setItem(STORAGE_SELECTED, JSON.stringify(updatedSelected));
+
+						// 2) devolverlo a la tienda (availableBuildings)
+						const rawAvail = localStorage.getItem(STORAGE_AVAILABLE);
+						// Fallback al catálogo base importado
+						const available = safeJSON(rawAvail, buildings);
+						const updatedAvailable = dedupeById([removedBuilding, ...available]); // al inicio
+
+						localStorage.setItem(STORAGE_AVAILABLE, JSON.stringify(updatedAvailable));
+
+						// 3) actualizar capacidad (elige A o B)
+						// A) si llevas contador persistente:
+						const capRaw = localStorage.getItem('currentCapacity');
+						if (capRaw !== null) {
+							const currentCap = parseInt(capRaw || '0', 10);
+							const newCap = Math.max(0, currentCap - (removedBuilding.capacity || 0));
+							localStorage.setItem('currentCapacity', String(newCap));
+						}
+
+						// B) si prefieres recalcularla desde selectedBuildings (+ bonus):
+						/*
+        const bonus = parseInt(localStorage.getItem('capacityBonus') || '0', 10);
+        const recomputed = updatedSelected.reduce((acc, b) => acc + (b.capacity || 0), 0) + bonus;
+        localStorage.setItem('currentCapacity', String(recomputed));
+        */
 					}
 				} catch (err) {
-					console.error('Error leyendo selectedBuildings:', err);
+					console.error('Error leyendo selectedBuildings / availableBuildings:', err);
 				}
 			}
 		}
