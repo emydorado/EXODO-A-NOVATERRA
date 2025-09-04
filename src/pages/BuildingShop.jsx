@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import SavedHumans from '../components/SavedHumans';
 import Rounds from '../components/Rounds';
-import BuildignCard from '../components/buildignCard';
+import BuildignCard from '../components/BuildignCard';
 import buildings from '../data/buildings';
 import './buildingShop.css';
 import { useNavigate } from 'react-router-dom';
