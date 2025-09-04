@@ -24,7 +24,7 @@ const Offers = () => {
 	const [currentOffers, setCurrentOffers] = useState([]);
 	const [totalCapacity, setTotalCapacity] = useState(null);
 	const [selectedOffers, setSelectedOffers] = useState([]);
-	const [timeLeft, setTimeLeft] = useState(5);
+	const [timeLeft, setTimeLeft] = useState(30);
 	const [errorMsg, setErrorMsg] = useState('');
 	const [hasCryoNova, setHasCryoNova] = useState(false);
 	const [successMsg, setSuccessMsg] = useState('');
