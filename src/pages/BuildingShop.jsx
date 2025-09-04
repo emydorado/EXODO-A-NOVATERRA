@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import SavedHumans from '../components/SavedHumans';
 import Rounds from '../components/Rounds';
-import BuildingCard from '../components/buildignCard';
+import BuildignCard from '../components/buildignCard';
 import buildings from '../data/buildings';
 import './buildingShop.css';
 import { useNavigate } from 'react-router-dom';
@@ -63,7 +63,7 @@ const BuildingShop = () => {
 				</button>
 				<div className='buildings-grid'>
 					{filteredBuildings.map((b) => (
-						<BuildingCard
+						<BuildignCard
 							key={b.id}
 							title={b.name}
 							image={b.image}

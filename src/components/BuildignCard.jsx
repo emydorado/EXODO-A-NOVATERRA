@@ -1,6 +1,6 @@
 import './buildingCard.css';
 
-const BuildingCard = ({ image, title, description, capacity, onSelect }) => {
+const BuildignCard = ({ image, title, description, capacity, onSelect }) => {
 	return (
 		<div id='building-card' onClick={onSelect}>
 			<img src={image} />
@@ -15,4 +15,4 @@ const BuildingCard = ({ image, title, description, capacity, onSelect }) => {
 	);
 };
 
-export default BuildingCard;
+export default BuildignCard;
