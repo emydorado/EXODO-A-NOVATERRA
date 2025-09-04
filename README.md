@@ -1,12 +1,54 @@
-# React + Vite
+# NovaTerra: Hybrid Game of Cooperation and Competition 🌍🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Game Description
 
-Currently, two official plugins are available:
+NovaTerra is a hybrid game combining **digital components** with a **physical board**, where players must organize resources to ensure humanity’s survival amid the collapse of Earth.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The goal is to reach NovaTerra while rescuing as many people as possible, balancing **cooperation and competition**: collective success ensures survival, while individual achievement determines who becomes the true savior of humanity. 🏆
 
-## Expanding the ESLint configuration
+## Digital Components
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The digital part of the game serves several functions:
+
+- **Tells the story** and guides players step by step through the gameplay. 📖
+- **Receives live offers** from players for purchasing buildings and managing resources. 💰
+- **Updates the global state** of people and resources in real time. 🔄
+- Integrates events that affect the game and players’ outcomes. ⚡
+
+## Game Phases
+
+The game progresses in **successive phases** that repeat each round:
+
+1. **Income:** Players are given resources at the start of each round. 💸
+2. **Contributions:** Players decide whether to contribute to shared infrastructure to increase overall capacity. 🏗️
+3. **Offers:** Live offers from players are processed, primarily for acquiring buildings and strategic resources. 🏢
+4. **Events:** Random or programmed events that affect players and the global game state. 🌪️
+
+## Global State
+
+The system maintains a **global state** including:
+
+- Number of people rescued 🧑‍🤝‍🧑
+- Available resources 📦
+- Buildings and properties acquired by players 🏬
+- Active events and their effects on the game ⚡
+
+## Technologies
+
+- **Frontend:** React ⚛️
+- **Global State Management:** Context API / Redux
+- **Backend:** Node.js / WebSockets to handle live offers and state synchronization 🌐
+
+## How to Play
+
+1. Each player interacts with the physical board and the digital interface. 🎲
+2. The digital screen guides the story and displays real-time updates. 🖥️
+3. Players take turns through the phases (Income → Contributions → Offers → Events).
+4. Players negotiate, buy buildings, contribute to shared infrastructure, and respond to events.
+5. At the end of the game, the number of people rescued and individual performance determine the “savior of humanity.” 🏆
+
+## Authors
+
+- Natalia García
+- Emy Dorado
+- Alejandra Hurtado
